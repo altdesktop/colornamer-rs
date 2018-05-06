@@ -68,6 +68,15 @@ pub fn color_from_hex(name: &'static str, hex: &str) -> Color {
     }
 }
 
+pub fn color_from_triplet(name: &'static str, t: (u8, u8, u8)) -> Color {
+    Color {
+        r: t.0 as f32,
+        g: t.1 as f32,
+        b: t.2 as f32,
+        name,
+    }
+}
+
 impl vpsearch::MetricSpace for Color {
     type UserData = ();
     type Distance = f32;
