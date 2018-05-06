@@ -1,5 +1,5 @@
 use color_names::ColorNames;
-use color::{Color, color_from_hex};
+use color::{Color, color_from_triplet};
 
 pub struct BasicColors {
 }
@@ -7,27 +7,27 @@ pub struct BasicColors {
 impl ColorNames for BasicColors {
     fn get_colors(&self) -> Vec<Color> {
         return vec![
-            color_from_hex("black", "#000000"),
-            color_from_hex("blue", "#0000FF"),
-            color_from_hex("cyan", "#00FFFF"),
-            color_from_hex("green", "#008000"),
-            color_from_hex("teal", "#008080"),
-            color_from_hex("turquoise", "#40E0D0"),
-            color_from_hex("indigo", "#4B0082"),
-            color_from_hex("gray", "#808080"),
-            color_from_hex("purple", "#800080"),
-            color_from_hex("brown", "#A52A2A"),
-            color_from_hex("tan", "#D2B48C"),
-            color_from_hex("violet", "#EE82EE"),
-            color_from_hex("beige", "#F5F5DC"),
-            color_from_hex("fuchsia", "#FF00FF"),
-            color_from_hex("gold", "#FFD700"),
-            color_from_hex("magenta", "#FF00FF"),
-            color_from_hex("orange", "#FFA500"),
-            color_from_hex("pink", "#FFC0CB"),
-            color_from_hex("red", "#FF0000"),
-            color_from_hex("white", "#FFFFFF"),
-            color_from_hex("yellow", "#FFFF00")
+            color_from_triplet("black", (0, 0, 0)),
+            color_from_triplet("blue", (0, 0, 255)),
+            color_from_triplet("cyan", (0, 255, 255)),
+            color_from_triplet("green", (0, 128, 0)),
+            color_from_triplet("teal", (0, 128, 128)),
+            color_from_triplet("turquoise", (64, 224, 208)),
+            color_from_triplet("indigo", (75, 0, 130)),
+            color_from_triplet("gray", (128, 128, 128)),
+            color_from_triplet("purple", (128, 0, 128)),
+            color_from_triplet("brown", (165, 42, 42)),
+            color_from_triplet("tan", (210, 180, 140)),
+            color_from_triplet("violet", (238, 130, 238)),
+            color_from_triplet("beige", (245, 245, 220)),
+            color_from_triplet("fuchsia", (255, 0, 255)),
+            color_from_triplet("gold", (255, 215, 0)),
+            color_from_triplet("magenta", (255, 0, 255)),
+            color_from_triplet("orange", (255, 165, 0)),
+            color_from_triplet("pink", (255, 192, 203)),
+            color_from_triplet("red", (255, 0, 0)),
+            color_from_triplet("white", (255, 255, 255)),
+            color_from_triplet("yellow", (255, 255, 0))
         ]
     }
 }
