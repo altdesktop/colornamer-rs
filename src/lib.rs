@@ -1,4 +1,8 @@
-#[macro_use] extern crate lazy_static;
+#[macro_use]
+extern crate lazy_static;
+#[macro_use]
+extern crate bitflags;
+
 extern crate vpsearch;
 
 mod color;
@@ -13,13 +17,15 @@ use colors::pantone::PantoneColors;
 use colors::roygbiv::RoygbivColors;
 use colors::x11::X11Colors;
 
-pub enum Colors {
-    Basic,
-    HTML,
-    Ntc,
-    Pantone,
-    Roygbiv,
-    X11
+bitflags! {
+    pub struct Colors: u32 {
+        const Basic   = 0b00000001;
+        const HTML    = 0b00000010;
+        const Ntc     = 0b00000100;
+        const Pantone = 0b00001000;
+        const Roygbiv = 0b00010000;
+        const X11     = 0b00100000;
+    }
 }
 
 pub fn name_color_hex(hex: &str, colors: Colors) -> String {
@@ -29,7 +35,8 @@ pub fn name_color_hex(hex: &str, colors: Colors) -> String {
         Colors::Ntc => NtcColors{}.get_colors(),
         Colors::Pantone => PantoneColors{}.get_colors(),
         Colors::Roygbiv => RoygbivColors{}.get_colors(),
-        Colors::X11 => X11Colors{}.get_colors()
+        Colors::X11 => X11Colors{}.get_colors(),
+        _ => panic!("not implemented")
     };
 
     let vp = vpsearch::Tree::new(&names);
