@@ -16,34 +16,62 @@ use colors::ntc::NtcColors;
 use colors::pantone::PantoneColors;
 use colors::roygbiv::RoygbivColors;
 use colors::x11::X11Colors;
-use color::ColorError;
+use color::{Color, ColorError};
 
 bitflags! {
     pub struct Colors: u32 {
-        const Basic   = 0b00000001;
+        const BASIC   = 0b00000001;
         const HTML    = 0b00000010;
-        const Ntc     = 0b00000100;
-        const Pantone = 0b00001000;
-        const Roygbiv = 0b00010000;
+        const NTC     = 0b00000100;
+        const PANTONE = 0b00001000;
+        const ROYGBIV = 0b00010000;
         const X11     = 0b00100000;
     }
 }
 
-pub fn name_hex_color(hex: &str, colors: Colors) -> Result<String, ColorError> {
-    let color = color::color_from_hex("", &hex)?;
+pub struct ColorNamer {
+    colors: Vec<Color>
+}
 
-    let names = match colors {
-        Colors::Basic => BasicColors{}.get_colors(),
-        Colors::HTML => HTMLColors{}.get_colors(),
-        Colors::Ntc => NtcColors{}.get_colors(),
-        Colors::Pantone => PantoneColors{}.get_colors(),
-        Colors::Roygbiv => RoygbivColors{}.get_colors(),
-        Colors::X11 => X11Colors{}.get_colors(),
-        _ => panic!("not implemented")
-    };
+impl ColorNamer {
+    pub fn new(colors: Colors) -> ColorNamer {
+        let mut color_vec: Vec<Color> = vec![];
 
-    let vp = vpsearch::Tree::new(&names);
-    let (index, _) = vp.find_nearest(&color);
+        if !(colors | Colors::BASIC).is_empty() {
+            color_vec.append(&mut BasicColors{}.get_colors());
+        }
 
-    Ok(String::from(names[index].name))
+        if !(colors | Colors::HTML).is_empty() {
+            color_vec.append(&mut HTMLColors{}.get_colors());
+        }
+
+        if !(colors | Colors::NTC).is_empty() {
+            color_vec.append(&mut NtcColors{}.get_colors());
+        }
+
+        if !(colors | Colors::PANTONE).is_empty() {
+            color_vec.append(&mut PantoneColors{}.get_colors());
+        }
+
+        if !(colors | Colors::ROYGBIV).is_empty() {
+            color_vec.append(&mut RoygbivColors{}.get_colors());
+        }
+
+        if !(colors | Colors::X11).is_empty() {
+            color_vec.append(&mut X11Colors{}.get_colors());
+        }
+
+        ColorNamer {
+            colors: color_vec
+        }
+    }
+
+    pub fn name_hex_color(&self, hex: &str) -> Result<String, ColorError> {
+        let color = color::color_from_hex("", &hex)?;
+
+        let vp = vpsearch::Tree::new(&self.colors);
+        let (index, _) = vp.find_nearest(&color);
+
+        Ok(String::from(self.colors[index].name))
+    }
 }
