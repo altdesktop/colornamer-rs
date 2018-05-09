@@ -33,7 +33,12 @@ lazy_static! {
     };
 }
 
-pub fn color_from_hex(name: &'static str, hex: &str) -> Color {
+#[derive(Debug)]
+pub enum ColorError {
+    InvalidColorError
+}
+
+pub fn color_from_hex(name: &'static str, hex: &str) -> Result<Color, ColorError> {
     let hex_vec: Vec<char> = if hex.starts_with("#") {
         hex.to_string().to_uppercase().chars().skip(1).collect()
     } else {
@@ -43,14 +48,14 @@ pub fn color_from_hex(name: &'static str, hex: &str) -> Color {
     let mut value: Vec<u32> = vec![];
 
     if hex_vec.len() < 6 {
-        panic!("got invalid hex string: {:?}", hex);
+        return Err(ColorError::InvalidColorError);
     }
 
     // XXX use step_by when it is stable
     let mut i = 0;
     while i < 6 {
         if !HEX_ALPHABETS.contains_key(&hex_vec[i]) || !HEX_ALPHABETS.contains_key(&hex_vec[i+1]) {
-            panic!("got invalid hex string: {:?}", hex);
+            return Err(ColorError::InvalidColorError);
         }
 
         let int1 = HEX_ALPHABETS.get(&hex_vec[i]).unwrap();
@@ -60,12 +65,12 @@ pub fn color_from_hex(name: &'static str, hex: &str) -> Color {
         i += 2;
     }
 
-    Color {
+    Ok(Color {
         r: value[0] as f32,
         g: value[1] as f32,
         b: value[2] as f32,
         name: name
-    }
+    })
 }
 
 pub fn color_from_triplet(name: &'static str, t: (u8, u8, u8)) -> Color {

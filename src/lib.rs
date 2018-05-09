@@ -16,6 +16,7 @@ use colors::ntc::NtcColors;
 use colors::pantone::PantoneColors;
 use colors::roygbiv::RoygbivColors;
 use colors::x11::X11Colors;
+use color::ColorError;
 
 bitflags! {
     pub struct Colors: u32 {
@@ -28,7 +29,9 @@ bitflags! {
     }
 }
 
-pub fn name_color_hex(hex: &str, colors: Colors) -> String {
+pub fn name_hex_color(hex: &str, colors: Colors) -> Result<String, ColorError> {
+    let color = color::color_from_hex("", &hex)?;
+
     let names = match colors {
         Colors::Basic => BasicColors{}.get_colors(),
         Colors::HTML => HTMLColors{}.get_colors(),
@@ -40,7 +43,7 @@ pub fn name_color_hex(hex: &str, colors: Colors) -> String {
     };
 
     let vp = vpsearch::Tree::new(&names);
-    let (index, _) = vp.find_nearest(&color::color_from_hex("", hex));
+    let (index, _) = vp.find_nearest(&color);
 
-    String::from(names[index].name)
+    Ok(String::from(names[index].name))
 }

@@ -7,7 +7,7 @@ use colornamer::{name_color_hex,Colors};
 
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("basic", |b| b.iter(|| name_color_hex("#1E90FF", Colors::HTML)));
+    c.bench_function("basic", |b| b.iter(|| name_hex_color("#1E90FF", Colors::HTML).unwrap()));
 }
 
 criterion_group!(benches, criterion_benchmark);
