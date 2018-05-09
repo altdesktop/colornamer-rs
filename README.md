@@ -6,18 +6,23 @@ Give me a color and I will name it.
 
 ## About
 
-Naming things is one of the hard things in computer science. colornamer-rs is a library written in Rust that helps you come up with a good name for a color. It does this by converting the color to RGB space and then finding the nearest neighbor.
+Naming things is one of the hard things in computer science.
+
+Colornamer-rs is a library written in Rust that helps you come up with a good name for a color.
+
+It does this by converting the color to RGB colorspace and then finding the nearest neighbor in a list of colors.
 
 ## Example
 
 ```rust
 extern crate colornamer;
 
-use colornamer::Colors;
+use colornamer::{ColorNamer, Colors};
 
 fn main() {
-    // dodgerblue
-    let name = colornamer::name_color_hex("#1E90FF", Colors::HTML);
+    let colornamer = ColorNamer::new(Colors::HTML);
+    let name: String = colornamer.name_hex_color("#1E90FF").unwrap()
+
     println!("I will call this color '{}'", name);
 }
 ```

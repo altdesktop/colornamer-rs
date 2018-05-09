@@ -1,8 +1,11 @@
 extern crate colornamer;
 
-use colornamer::Colors;
+use colornamer::{ColorNamer, Colors};
 
 fn main() {
-    let result = colornamer::name_color_hex("#1E90FF", Colors::Basic);
+    let colornamer = ColorNamer::new(Colors::BASIC);
+
+    let result = colornamer.name_hex_color("#1E90FF").unwrap();
+
     println!("result = {}", result);
 }
