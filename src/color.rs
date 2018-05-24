@@ -82,7 +82,7 @@ pub fn color_from_triplet(name: &'static str, t: (u8, u8, u8)) -> Color {
 
 impl Color {
 	/// http://www.easyrgb.com/en/math.php
-	fn to_lab(&self) -> (f32, f32, f32) {
+	pub fn to_lab(&self) -> (f32, f32, f32) {
 		let xyz_normalize = |c: f32| {
 			let c_normal = c / 255.0;
 			if c_normal > 0.04045 {
@@ -119,9 +119,9 @@ impl Color {
 		(l, a, b)
 	}
 
-	pub fn distance(&self, other: &Self) -> f32 {
+	pub fn distance(&self, lab: (f32, f32, f32)) -> f32 {
 		let (sl, sa, sb) = self.to_lab();
-		let (ol, oa, ob) = other.to_lab();
+		let (ol, oa, ob) = lab;
 
 		let dl = sl - ol;
 		let da = sa - oa;
