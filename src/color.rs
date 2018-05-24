@@ -1,5 +1,3 @@
-extern crate vpsearch;
-
 use std::collections::HashMap;
 
 #[derive(Copy, Clone, Debug)]
@@ -82,15 +80,12 @@ pub fn color_from_triplet(name: &'static str, t: (u8, u8, u8)) -> Color {
     }
 }
 
-impl vpsearch::MetricSpace for Color {
-    type UserData = ();
-    type Distance = f32;
+impl Color {
+	pub fn distance(&self, other: &Self) -> f32 {
+		let dr = self.r - other.r;
+		let dg = self.g - other.g;
+		let db = self.b - other.b;
 
-    fn distance(&self, other: &Self, _: &Self::UserData) -> Self::Distance {
-        let dr = self.r - other.r;
-        let dg = self.g - other.g;
-        let db = self.b - other.b;
-
-        (dr*dr + dg*dg + db*db).sqrt()
-    }
+		dr*dr + dg*dg + db*db
+	}
 }

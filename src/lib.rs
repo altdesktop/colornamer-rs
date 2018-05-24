@@ -3,8 +3,6 @@ extern crate lazy_static;
 #[macro_use]
 extern crate bitflags;
 
-extern crate vpsearch;
-
 mod color;
 mod color_names;
 mod colors;
@@ -69,9 +67,17 @@ impl ColorNamer {
     pub fn name_hex_color(&self, hex: &str) -> Result<String, ColorError> {
         let color = color::color_from_hex("", &hex)?;
 
-        let vp = vpsearch::Tree::new(&self.colors);
-        let (index, _) = vp.find_nearest(&color);
+        let mut min_distance: f32 = std::f32::MAX;
+        let mut closest_color = color;
 
-        Ok(String::from(self.colors[index].name))
+        for c in &self.colors {
+            let distance = color.distance(c);
+            if distance < min_distance {
+                min_distance = distance;
+                closest_color = *c;
+            }
+        }
+
+        Ok(closest_color.name.to_string())
     }
 }
