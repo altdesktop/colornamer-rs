@@ -2,8 +2,6 @@
 
 Give me a color and I will name it.
 
-*colornamer-rs is in the early stages of development and the api should be considered unstable*
-
 ## About
 
 Naming things is one of the hard things in computer science.
@@ -11,6 +9,15 @@ Naming things is one of the hard things in computer science.
 Colornamer-rs is a library written in Rust that helps you come up with a good name for a color.
 
 It does this by converting the color to [Lab color space](https://en.wikipedia.org/wiki/Lab_color_space) and using the Delta E formula to compare the color difference in a list of colors with known names and finding the nearest neighbor.
+
+## Installing
+
+Colornamer-rs is available as a [crate](https://crates.io/crates/colornamer) on crates.io. Add `colornamer` to your dependencies with the latest stable version to use the library.
+
+```toml
+[dependencies]
+colornamer = "1.0.1"
+```
 
 ## Example
 
@@ -37,6 +44,10 @@ The color names are derived from several lists:
 * X11
 * Pantone
 * ntc - an [astounding collection](http://chir.ag/projects/ntc/) of over 1500 named colors.
+
+## Projects that use colornamer-rs
+
+* [i3-style](https://github.com/acrisci/i3-style)
 
 ## Acknowledgements
 
