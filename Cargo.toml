@@ -1,7 +1,9 @@
 [package]
 name = "colornamer"
-version = "0.1.0"
+description = "give me a color and I will name it"
+version = "1.0.1"
 authors = ["Tony Crisci <tony@dubstepdish.com>"]
+license = "MIT"
 
 [dependencies]
 lazy_static = "1.0"
