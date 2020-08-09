@@ -10,6 +10,8 @@ Colornamer-rs is a library written in Rust that helps you come up with a good na
 
 It does this by converting the color to [Lab color space](https://en.wikipedia.org/wiki/Lab_color_space) and using the Delta E formula to compare the color difference in a list of colors with known names and finding the nearest neighbor.
 
+[Chat](https://discord.gg/UdbXHVX)
+
 ## Installing
 
 Colornamer-rs is available as a [crate](https://crates.io/crates/colornamer) on crates.io. Add `colornamer` to your dependencies with the latest stable version to use the library.
