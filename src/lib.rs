@@ -66,13 +66,12 @@ impl ColorNamer {
 
     pub fn name_hex_color(&self, hex: &str) -> Result<String, ColorError> {
         let color = color::color_from_hex("", &hex)?;
-        let lab = color.to_lab();
 
         let mut min_distance: f32 = std::f32::MAX;
         let mut closest_color = color;
 
         for c in &self.colors {
-            let distance = c.distance(lab);
+            let distance = c.distance(color);
             if distance < min_distance {
                 min_distance = distance;
                 closest_color = *c;
