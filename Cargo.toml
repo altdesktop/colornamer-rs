@@ -8,9 +8,12 @@ license = "MIT"
 [dependencies]
 lazy_static = "1.0"
 bitflags = "1.0"
+delta_e = "0.2"
+lab = "0.7"
 
 [dev-dependencies]
 criterion = "0.1.2"
+
 
 [[bench]]
 name = "basic"
